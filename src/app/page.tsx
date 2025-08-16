@@ -25,6 +25,25 @@ export default function Home() {
     setCardData(null);
 
     try {
+      console.log(`🔍 Starting card search for: "${cardName}"`);
+      const startTime = Date.now();
+      
+      // Format the card name for URL
+      const formattedName = cardName
+        .split(' ')
+        .map((word, index) => {
+          const wordsToLowercase = ['the', 'of', 'as', 'in', 'on', 'at', 'to', 'for', 'with', 'by', 'from', 'and', 'or', 'but', 'a', 'an'];
+          if (index === 0 || !wordsToLowercase.includes(word.toLowerCase())) {
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+          }
+          return word.toLowerCase();
+        })
+        .join('_');
+      
+      console.log(`📝 Formatted card name: "${cardName}" → "${formattedName}"`);
+      console.log(`🌐 Wiki URL: https://cards-the-universe-and-everything.fandom.com/wiki/${formattedName}`);
+      console.log(`📡 Sending request to API...`);
+
       const response = await fetch("/api/card", {
         method: "POST",
         headers: {
@@ -33,14 +52,25 @@ export default function Home() {
         body: JSON.stringify({ card: cardName }),
       });
 
+      const responseTime = Date.now() - startTime;
+      console.log(`⏱️ API response received in ${responseTime}ms`);
+
       if (!response.ok) {
         const errorData = await response.json();
+        console.error(`❌ API Error (${response.status}):`, errorData.error);
         throw new Error(errorData.error || "Failed to fetch card data");
       }
 
       const data = await response.json();
+      console.log(`✅ Card data received:`, data);
+      console.log(`📊 Card stats: Energy=${data.energy}, Power=${data.power}, Rarity=${data.rarity}`);
+      console.log(`🏷️ Album: ${data.album}, Type: ${data.type}`);
+      console.log(`⚡ Abilities: ${data.ability_descriptions.length} ability(ies)`);
+      console.log(`🎯 Total request time: ${Date.now() - startTime}ms`);
+      
       setCardData(data);
     } catch (err) {
+      console.error(`💥 Request failed:`, err instanceof Error ? err.message : err);
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);

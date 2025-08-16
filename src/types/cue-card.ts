@@ -40,4 +40,5 @@ export interface CueCard {
   collection: string | null;
   ability_triggers: Trigger[];
   ability_descriptions: string[];
+  imageUrl: string | null;
 }
