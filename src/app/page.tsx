@@ -27,21 +27,40 @@ export default function Home() {
     try {
       console.log(`🔍 Starting card search for: "${cardName}"`);
       const startTime = Date.now();
-      
+
       // Format the card name for URL
       const formattedName = cardName
-        .split(' ')
+        .split(" ")
         .map((word, index) => {
-          const wordsToLowercase = ['the', 'of', 'as', 'in', 'on', 'at', 'to', 'for', 'with', 'by', 'from', 'and', 'or', 'but', 'a', 'an'];
+          const wordsToLowercase = [
+            "the",
+            "of",
+            "as",
+            "in",
+            "on",
+            "at",
+            "to",
+            "for",
+            "with",
+            "by",
+            "from",
+            "and",
+            "or",
+            "but",
+            "a",
+            "an",
+          ];
           if (index === 0 || !wordsToLowercase.includes(word.toLowerCase())) {
             return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
           }
           return word.toLowerCase();
         })
-        .join('_');
-      
+        .join("_");
+
       console.log(`📝 Formatted card name: "${cardName}" → "${formattedName}"`);
-      console.log(`🌐 Wiki URL: https://cards-the-universe-and-everything.fandom.com/wiki/${formattedName}`);
+      console.log(
+        `🌐 Wiki URL: https://cards-the-universe-and-everything.fandom.com/wiki/${formattedName}`
+      );
       console.log(`📡 Sending request to API...`);
 
       const response = await fetch("/api/card", {
@@ -63,14 +82,21 @@ export default function Home() {
 
       const data = await response.json();
       console.log(`✅ Card data received:`, data);
-      console.log(`📊 Card stats: Energy=${data.energy}, Power=${data.power}, Rarity=${data.rarity}`);
+      console.log(
+        `📊 Card stats: Energy=${data.energy}, Power=${data.power}, Rarity=${data.rarity}`
+      );
       console.log(`🏷️ Album: ${data.album}, Type: ${data.type}`);
-      console.log(`⚡ Abilities: ${data.ability_descriptions.length} ability(ies)`);
+      console.log(
+        `⚡ Abilities: ${data.ability_descriptions.length} ability(ies)`
+      );
       console.log(`🎯 Total request time: ${Date.now() - startTime}ms`);
-      
+
       setCardData(data);
     } catch (err) {
-      console.error(`💥 Request failed:`, err instanceof Error ? err.message : err);
+      console.error(
+        `💥 Request failed:`,
+        err instanceof Error ? err.message : err
+      );
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
@@ -83,7 +109,12 @@ export default function Home() {
     setError(null);
   };
 
-  const examples = ["Planet X", "Leonhard Euler", "Michelangelo"];
+  const examples = [
+    "Leonhard Euler",
+    "Space Launch System",
+    "Baryonyx",
+    "Humorism",
+  ];
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -149,7 +180,7 @@ export default function Home() {
             <Text size="sm" className="text-blue-200">
               Try searching for these cards:
             </Text>
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 max-w-lg mx-auto">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 max-w-2xl mx-auto">
               {examples.map((example) => (
                 <Button
                   key={example}
