@@ -18,7 +18,7 @@ const SearchBox = React.forwardRef<HTMLInputElement, SearchBoxProps>(
         <input
           type="search"
           className={cn(
-            "flex h-10 min-h-[44px] w-full rounded-md border border-input bg-background pl-10 pr-10 py-2 text-base sm:text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 touch-manipulation",
+            "flex h-10 min-h-[44px] w-full rounded-lg border border-input bg-background pl-10 pr-10 py-2 text-base sm:text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 touch-manipulation shadow-md hover:shadow-lg focus-visible:shadow-lg transition-all duration-200",
             className
           )}
           ref={ref}

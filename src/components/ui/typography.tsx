@@ -9,7 +9,7 @@ export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
 
 const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
   ({ className, level = 1, variant = "default", weight = "bold", ...props }, ref) => {
-    const Component = `h${level}` as keyof JSX.IntrinsicElements;
+    const Component = `h${level}` as keyof React.JSX.IntrinsicElements;
     
     const levelClasses = {
       1: "text-4xl lg:text-5xl leading-tight tracking-tight",
