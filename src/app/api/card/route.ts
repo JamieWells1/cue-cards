@@ -26,11 +26,11 @@ export async function POST(request: NextRequest) {
     }
 
     const response = await client.chat.completions.create({
-      model: "gpt-4o-search-preview-2025-03-11",
+      model: "gpt-4o-mini-search-preview",
       messages: [
         {
           role: "system",
-          content: "You are a careful data extraction assistant that fetches CUE (Cards, the Universe and Everything) card data from https://cards-the-universe-and-everything.fandom.com/wiki/[card]. For a given card name, retrieve the page (if it exists) and extract the card data. Return the data as valid JSON.",
+          content: "You are a careful data extraction assistant that fetches CUE (Cards, the Universe and Everything) card data from https://cards-the-universe-and-everything.fandom.com/wiki/[card] or similar. For a given card name, retrieve the page (if it exists) and extract the card data. Return the data as valid JSON. Make sure you do a comprehensive search for the page, and return null if nothing is found after retries.",
         },
         { role: "user", content: card },
       ],

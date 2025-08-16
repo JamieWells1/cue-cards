@@ -32,12 +32,12 @@ export enum Album {
 
 export interface CueCard {
   name: string;
-  energy?: number | null;
-  power?: number | null;
-  rarity?: Rarity | null;
-  type?: CardType | null;
-  album?: Album | null;
-  collection?: string | null;
+  energy: number | null;
+  power: number | null;
+  rarity: Rarity | null;
+  type: CardType | null;
+  album: Album | null;
+  collection: string | null;
   ability_triggers: Trigger[];
   ability_descriptions: string[];
 }

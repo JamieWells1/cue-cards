@@ -1,26 +1,78 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-nunito);
+  
+  /* Color System */
+  --color-border: 240 3.7% 15.9%;
+  --color-input: 240 3.7% 15.9%;
+  --color-ring: 240 4.9% 83.9%;
+  --color-background: 240 10% 3.9%;
+  --color-foreground: 0 0% 98%;
+  
+  /* Primary - now black for better button visibility */
+  --color-primary: 240 10% 3.9%;
+  --color-primary-foreground: 0 0% 98%;
+  
+  /* Secondary - now white */
+  --color-secondary: 0 0% 98%;
+  --color-secondary-foreground: 240 10% 3.9%;
+  
+  --color-destructive: 0 62.8% 30.6%;
+  --color-destructive-foreground: 0 0% 98%;
+  
+  --color-muted: 240 3.7% 15.9%;
+  --color-muted-foreground: 240 5% 64.9%;
+  
+  --color-accent: 240 3.7% 15.9%;
+  --color-accent-foreground: 0 0% 98%;
+  
+  --color-popover: 240 10% 3.9%;
+  --color-popover-foreground: 0 0% 98%;
+  
+  --color-card: 240 10% 3.9%;
+  --color-card-foreground: 0 0% 98%;
+  
+  /* Card Rarity Colors - matching Python CLI exactly */
+  --color-rarity-common: 0 0% 40%;        /* GREY */
+  --color-rarity-rare: 30 100% 30%;       /* BROWN */
+  --color-rarity-epic: 0 0% 75%;          /* SILVER */
+  --color-rarity-legendary: 60 100% 60%;  /* GOLD */
+  --color-rarity-fusion: 0 100% 60%;      /* RED_RARITY */
+  --color-rarity-ultra_fusion: 25 100% 50%; /* BRIGHT_ORANGE */
+  --color-rarity-mythic: 300 100% 60%;    /* VIOLET */
+  
+  /* Card Album Colors */
+  --color-album-paleontology: 25 100% 40%;    /* DARK_ORANGE */
+  --color-album-history: 60 100% 60%;         /* YELLOW */
+  --color-album-oceans_and_seas: 220 100% 60%; /* BLUE */
+  --color-album-life_on_land: 120 100% 50%;   /* GREEN */
+  --color-album-space: 300 100% 60%;          /* PURPLE_ALBUM */
+  --color-album-arts_and_culture: 340 100% 60%; /* PINKY_RED */
+  --color-album-science: 180 100% 60%;        /* TURQUOISE */
+  
+  /* Card Trigger Colors */
+  --color-trigger-draw: 120 100% 50%;    /* LIME */
+  --color-trigger-play: 0 100% 60%;      /* LIGHT_RED */
+  --color-trigger-return: 300 100% 60%;  /* PURPLE_TRIGGER */
+  --color-trigger-start: 60 100% 60%;    /* YELLOW */
+  
+  /* Card Attributes */
+  --color-energy: 220 100% 60%;    /* LIGHT_BLUE */
+  --color-power: 300 100% 60%;     /* PURPLE */
+  
+  /* Border Radius */
+  --radius-lg: 0.5rem;
+  --radius-md: calc(0.5rem - 2px);
+  --radius-sm: calc(0.5rem - 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }

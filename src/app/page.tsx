@@ -1,11 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { CueCard } from '@/types/cue-card';
+import { Loader2, Sparkles } from 'lucide-react';
+import { CueCard as CueCardType } from '@/types/cue-card';
+import { Container } from '@/components/ui/container';
+import { SearchBox } from '@/components/ui/search-box';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Heading, Text } from '@/components/ui/typography';
+import { CueCard } from '@/components/cue-card';
 
 export default function Home() {
   const [cardName, setCardName] = useState('');
-  const [cardData, setCardData] = useState<CueCard | null>(null);
+  const [cardData, setCardData] = useState<CueCardType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,150 +47,140 @@ export default function Home() {
     }
   };
 
-  const getRarityColor = (rarity?: string | null) => {
-    switch (rarity) {
-      case 'common': return 'text-gray-500';
-      case 'rare': return 'text-yellow-600';
-      case 'epic': return 'text-gray-300';
-      case 'legendary': return 'text-yellow-500';
-      case 'fusion': return 'text-red-500';
-      case 'ultra_fusion': return 'text-orange-500';
-      case 'mythic': return 'text-purple-500';
-      default: return 'text-gray-400';
-    }
+  const handleClear = () => {
+    setCardName('');
+    setCardData(null);
+    setError(null);
   };
 
-  const getAlbumColor = (album?: string | null) => {
-    switch (album) {
-      case 'paleontology': return 'text-orange-700';
-      case 'history': return 'text-yellow-500';
-      case 'oceans_and_seas': return 'text-blue-500';
-      case 'life_on_land': return 'text-green-500';
-      case 'space': return 'text-purple-500';
-      case 'arts_and_culture': return 'text-pink-500';
-      case 'science': return 'text-cyan-500';
-      default: return 'text-gray-400';
-    }
-  };
-
-  const getTriggerColor = (trigger: string) => {
-    switch (trigger) {
-      case 'draw': return 'text-green-400';
-      case 'play': return 'text-red-400';
-      case 'return': return 'text-purple-400';
-      case 'start': return 'text-yellow-400';
-      default: return 'text-gray-400';
-    }
-  };
+  const examples = ['Michelangelo', 'Loch Ness Monster', 'Albert Einstein', 'Tyrannosaurus Rex'];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8">CUE Cards API</h1>
-        
-        <form onSubmit={handleSubmit} className="mb-8">
-          <div className="flex gap-4">
-            <input
-              type="text"
-              value={cardName}
-              onChange={(e) => setCardName(e.target.value)}
-              placeholder="Enter card name to query..."
-              className="flex-1 px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500"
-              disabled={loading}
-            />
-            <button
-              type="submit"
-              disabled={loading || !cardName.trim()}
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded-lg font-medium transition-colors"
-            >
-              {loading ? 'Searching...' : 'Query Card'}
-            </button>
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-b from-muted/30 to-background">
+        <Container className="py-16 space-y-8">
+          <div className="text-center space-y-4">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Sparkles className="h-8 w-8 text-primary" />
+              <Heading level={1} className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                CUE Cards Explorer
+              </Heading>
+            </div>
+            <Text size="lg" variant="muted" className="max-w-2xl mx-auto">
+              Discover detailed information about your favorite CUE (Cards, the Universe and Everything) cards. 
+              Search through the vast collection and explore card stats, abilities, and lore.
+            </Text>
           </div>
-        </form>
 
-        {error && (
-          <div className="mb-8 p-4 bg-red-900 border border-red-600 rounded-lg">
-            <p className="text-red-200">Error: {error}</p>
+          {/* Search Form */}
+          <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1">
+                <SearchBox
+                  value={cardName}
+                  onChange={(e) => setCardName(e.target.value)}
+                  onClear={handleClear}
+                  placeholder="Enter card name to search..."
+                  disabled={loading}
+                  className="h-12 text-base"
+                />
+              </div>
+              <Button
+                type="submit"
+                disabled={loading || !cardName.trim()}
+                size="lg"
+                className="sm:w-auto w-full"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Searching...
+                  </>
+                ) : (
+                  'Search Card'
+                )}
+              </Button>
+            </div>
+          </form>
+
+          {/* Example Cards */}
+          <div className="text-center space-y-3">
+            <Text variant="muted" size="sm">
+              Try searching for these popular cards:
+            </Text>
+            <div className="flex flex-wrap justify-center gap-2">
+              {examples.map((example) => (
+                <Button
+                  key={example}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setCardName(example);
+                    setError(null);
+                  }}
+                  disabled={loading}
+                  className="text-xs"
+                >
+                  {example}
+                </Button>
+              ))}
+            </div>
           </div>
+        </Container>
+      </div>
+
+      {/* Results Section */}
+      <Container className="py-8">
+        {error && (
+          <Card className="mb-8 border-destructive/50 bg-destructive/10 animate-slide-up">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="h-2 w-2 rounded-full bg-destructive" />
+                <Text variant="destructive" weight="medium">
+                  {error}
+                </Text>
+              </div>
+            </CardContent>
+          </Card>
         )}
 
         {cardData && (
-          <div className="bg-gray-800 border border-gray-600 rounded-lg p-6">
-            <h2 className="text-2xl font-bold mb-6 text-center">{cardData.name.toUpperCase()}</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="font-medium">Energy:</span>
-                  <span className="text-blue-400">
-                    {cardData.energy !== null && cardData.energy !== undefined ? cardData.energy : 'N/A'}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Power:</span>
-                  <span className="text-purple-400">
-                    {cardData.power !== null && cardData.power !== undefined ? cardData.power : 'N/A'}
-                  </span>
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="font-medium">Rarity:</span>
-                  <span className={getRarityColor(cardData.rarity)}>
-                    {cardData.rarity ? cardData.rarity.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'Unknown'}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Type:</span>
-                  <span className="text-cyan-400">
-                    {cardData.type ? cardData.type.replace(/\b\w/g, l => l.toUpperCase()) : 'Unknown'}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="flex justify-between">
-                <span className="font-medium">Album:</span>
-                <span className={getAlbumColor(cardData.album)}>
-                  {cardData.album ? cardData.album.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'Unknown'}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="font-medium">Collection:</span>
-                <span className="text-cyan-400">
-                  {cardData.collection || 'Unknown'}
-                </span>
-              </div>
-            </div>
-
-            {(cardData.ability_triggers.length > 0 || cardData.ability_descriptions.length > 0) && (
-              <div>
-                <h3 className="text-xl font-bold mb-4">Abilities</h3>
-                <div className="space-y-3">
-                  {Array.from({ length: Math.max(cardData.ability_triggers.length, cardData.ability_descriptions.length) }).map((_, i) => (
-                    <div key={i} className="bg-gray-700 p-3 rounded">
-                      {cardData.ability_triggers[i] && (
-                        <div className="mb-2">
-                          <span className={`${getTriggerColor(cardData.ability_triggers[i])} font-bold uppercase`}>
-                            {cardData.ability_triggers[i]}:
-                          </span>
-                        </div>
-                      )}
-                      {cardData.ability_descriptions[i] && (
-                        <p className="text-gray-200 ml-4">
-                          {cardData.ability_descriptions[i]}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+          <div className="animate-slide-up">
+            <CueCard card={cardData} />
           </div>
         )}
-      </div>
+
+        {!cardData && !error && !loading && (
+          <div className="text-center py-16 space-y-4">
+            <div className="h-24 w-24 mx-auto rounded-full bg-muted/30 flex items-center justify-center">
+              <Sparkles className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <div className="space-y-2">
+              <Heading level={3} variant="muted" weight="semibold">
+                Start your card exploration
+              </Heading>
+              <Text variant="muted">
+                Enter a card name above to discover its secrets and abilities
+              </Text>
+            </div>
+          </div>
+        )}
+      </Container>
+
+      {/* Footer */}
+      <footer className="border-t border-border/50 mt-16">
+        <Container className="py-8">
+          <div className="text-center space-y-2">
+            <Text variant="muted" size="sm">
+              Powered by OpenAI's search capabilities and the CUE Cards Wiki
+            </Text>
+            <Text variant="muted" size="xs">
+              Data sourced from cards-the-universe-and-everything.fandom.com
+            </Text>
+          </div>
+        </Container>
+      </footer>
     </div>
   );
 }

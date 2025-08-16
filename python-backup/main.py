@@ -11,6 +11,7 @@ GREEN = "\033[92m"
 RED = "\033[91m"
 RESET = "\033[0m"
 
+# card rarities
 GREY = "\033[90m"  # common
 BROWN = "\033[33m"  # rare
 SILVER = "\033[37m"  # epic
@@ -19,10 +20,12 @@ RED_RARITY = "\033[91m"  # fusion
 BRIGHT_ORANGE = "\033[38;5;208m"  # ultra_fusion
 VIOLET = "\033[95m"  # mythic
 
+# card attributes
 PURPLE = "\033[95m"  # power
 LIGHT_BLUE = "\033[94m"  # energy
 MID_BLUE = "\033[36m"  # energy alternative
 
+# card album
 DARK_ORANGE = "\033[38;5;208m"  # paleontology
 YELLOW = "\033[93m"  # history
 BLUE = "\033[94m"  # oceans and seas
@@ -31,6 +34,7 @@ PURPLE_ALBUM = "\033[95m"  # space
 PINKY_RED = "\033[38;5;197m"  # arts and culture
 TURQUOISE = "\033[96m"  # science
 
+# card ability trigger
 LIME = "\033[92m"  # draw
 LIGHT_RED = "\033[91m"  # play
 PURPLE_TRIGGER = "\033[95m"  # return
@@ -97,13 +101,14 @@ def query(card: str) -> CueCard:
             raise HTTPException(status_code=500, detail="OpenAI API key not configured")
 
         response = client.chat.completions.create(
-            model="gpt-4o-search-preview-2025-03-11",
+            model="gpt-4o-mini-search-preview",
             messages=[
                 {
                     "role": "system",
                     "content": "You are a careful data extraction assistant that fetches CUE (Cards, the Universe and "
-                    "Everything) card data from https://cards-the-universe-and-everything.fandom.com/wiki/[card]. For a "
-                    "given card name, retrieve the page (if it exists) and extract the card data. Return the data as valid JSON.",
+                    "Everything) card data from https://cards-the-universe-and-everything.fandom.com/wiki/[card] or similar. For a "
+                    "given card name, retrieve the page (if it exists) and extract the card data. Return the data as valid JSON. Make"
+                    "sure you do a comprehensive search for the page, and return null if nothing is found after retries.",
                 },
                 {"role": "user", "content": card},
             ],
