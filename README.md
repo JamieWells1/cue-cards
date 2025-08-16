@@ -1,49 +1,28 @@
 # CUE Cards API
 
-A Next.js application with TypeScript that provides an API for querying CUE (Cards, the Universe and Everything) card data, with a lightweight React frontend for testing.
+  Welcome to the CUE Cards database! 🎮
 
-## Features
+  This website helps you explore and search through all the cards from CUE: Cards, The Universe, Everything - the popular mobile trading card game.
 
-- **TypeScript API Routes**: REST API endpoints for card data queries
-- **React Frontend**: Simple interface to test API functionality  
-- **OpenAI Integration**: Uses GPT models to extract card data from wiki pages
-- **Tailwind CSS**: Modern styling with color-coded card attributes
+  ## How to Use
 
-## API Endpoints
+  **👉 Visit the live website using the link in the "About" section of this repository.**
 
-- `GET /api` - API status
-- `GET /api/health` - Health check
-- `POST /api/card` - Query card data by name
+  Simply browse through the collection, search for specific cards, and view detailed information about each card to help with your gameplay and deck
+  building strategies.
 
-## Getting Started
+  ## Support This Project
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+  If you find this tool helpful for your CUE gaming experience, please consider becoming a sponsor! ❤️
 
-2. Set up environment variables:
-   ```bash
-   # Add your OpenAI API key to .env.local
-   OPENAI_API_KEY=your_openai_api_key_here
-   ```
+  Web search tokens and hosting costs add up quickly, and your support helps keep this resource free and accessible for all CUE players.
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+  **[Become a Sponsor](https://github.com/sponsors/JamieWells1)**
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+  Thank you for being part of the CUE community! 🙏
 
-## Usage
+  ---
 
-Enter a card name in the search input to query the CUE Cards wiki and display formatted card information including:
+  *This is an unofficial fan project and is not affiliated with the official CUE game developers.*
 
-- Energy and Power stats
-- Rarity (with color coding)
-- Card type and album
-- Ability triggers and descriptions
-
-## Migration Notes
-
-This project was migrated from a Python FastAPI application to Next.js with TypeScript, maintaining the same API functionality and adding a web interface for easier testing.
+  This README is friendly, explains what users need to do, and politely asks for sponsorship support while explaining why it's needed.
